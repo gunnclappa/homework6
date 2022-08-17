@@ -1,50 +1,45 @@
 package guru.qa.tests;
 
-import com.codeborne.selenide.Configuration;
 import guru.qa.pages.RegistrationFormTest;
 import org.junit.jupiter.api.*;
 
-public class DemoqaTest {
+import static guru.qa.tests.TestData.*;
 
-    RegistrationFormTest registrationFormTest = new RegistrationFormTest();
-
-    @BeforeAll
-    static void configure() {
-        Configuration.browser = "chrome";
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-    }
+public class DemoqaTest extends TestBase {
 
     @Test
     void fillFormTest() {
 
+        RegistrationFormTest registrationFormTest = new RegistrationFormTest();
+
         // Set Values
         registrationFormTest.openPage()
-                .setFirstName("Kayrat")
-                .setLastName("Nurekenov")
-                .setEmail("Test@Test.com")
-                .setGender("Male")
-                .setNumber("8800800800")
-                .setBirthDate("21", "April", "1999")
-                .setSubjects("Maths")
-                .setHobbies("Music")
-                .setPicture("src/test/resources/cat.jpg")
-                .setAddress("Abbey Road: London, England")
-                .setState("Haryana")
-                .setCity("Karnal")
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setEmail(email)
+                .setGender(gender)
+                .setNumber(number)
+                .setBirthDate(day, month, year)
+                .setSubjects(subject)
+                .setHobbies(hobby)
+                .setPicture(picturePath)
+                .setAddress(address)
+                .setState(state)
+                .setCity(city)
                 .clickSubmit();
 
         // Assertions
         registrationFormTest.checkResultTableVisible()
-                .checkResult("Student Name", "Kayrat Nurekenov")
-                .checkResult("Student Email", "Test@Test.com")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "8800800800")
-                .checkResult("Date of Birth", "21 April,1999")
-                .checkResult("Subjects", "Maths")
-                .checkResult("Hobbies", "Music")
-                .checkResult("Picture", "cat.jpg")
-                .checkResult("Address", "Abbey Road: London, England")
-                .checkResult("State and City", "Haryana Karnal");
+                .checkResult("Student Name", firstName + " " + lastName)
+                .checkResult("Student Email", email)
+                .checkResult("Gender", gender)
+                .checkResult("Mobile", number)
+                .checkResult("Date of Birth", day + " " + month + "," + year)
+                .checkResult("Subjects", subject)
+                .checkResult("Hobbies", hobby)
+                .checkResult("Picture", pictureName)
+                .checkResult("Address", address)
+                .checkResult("State and City", state + " " + city);
     }
+
 }
